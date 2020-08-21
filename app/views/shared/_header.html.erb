@@ -1,0 +1,28 @@
+<div class="row">
+   <div class="col-md-12">
+      <div class="custom-dashboard-navbar  navbar-light ">
+        <nav class="navbar custom-navbar navbar-expand-lg">
+          <div class="custom-navbar-logo-div">
+            <%= link_to root_path, class: "navbar-brand custom-logo-link" do %>
+              <%= image_tag "Logo.png", width: "100%", height: "auto" %>
+            <% end %>
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav  ml-auto" >
+              <li class="nav-item dropdown custom-user-nav-item-list">
+                <a class="nav-link custom-user-nav-item-link username-position" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <div class="navbar-item custom-icon">
+                    <span class="custom-style-text"><%= current_user.username%></span>
+                    <%= link_to image_tag("user-login-button.svg", width: "30px", height: "auto"), destroy_user_session_path, method: :delete %>
+                  </div>
+                 </a>
+              </li>
+             </ul>
+          </div>
+        </nav>
+      </div>
+   </div>
+</div>

@@ -1,0 +1,165 @@
+<div class="row">
+   <div class="col-md-12">
+      <div class="custom-contact-listing-section">
+         <div class="container">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="custom-contact-lisiting-headding" >
+                  <h5>EMAIL CONFIGURATION</h5>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="custom-email-export-button">
+                  <button  type="button" class="btn custom-export-button">EXPORT</button>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="custom-side-panal-section">
+                   <div class="sidebar-search-button d-flex justify-content-between">
+                      <div class="form-group has-search">
+                         <span class="fa fa-search form-control-feedback"></span>
+                         <input type="text" class="form-control custom-search-input" placeholder="Search">
+                      </div>
+                      <button type="button" class="btn btn-default btn-circle"><i class="fa fa-plus"></i>
+                      </button>
+                   </div>
+                   <div class="custom-email-list-section">
+                      <div class="row">
+                         <div class="col-md-12">
+                            <div class="profile-card">
+                               <div class="image-container">
+                                  <div type="button" class="btn image-text ">
+                                     <span>J</span>
+                                  </div>
+                               </div>
+                               <div class="text-container">
+                                  <h6 class="headding-text">John Deo</h6>
+                                  <p class="email-text">johndeo@xyz.com</p>
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                      <div class="row">
+                         <div class="col-md-12">
+                            <div class="profile-card">
+                               <div class="image-container">
+                                  <div type="button" class="btn image-text ">
+                                     <span>M</span>
+                                  </div>
+                               </div>
+                               <div class="text-container">
+                                  <h6 class="headding-text">John Deo</h6>
+                                  <p class="email-text">johndeo@xyz.com</p>
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                      <div class="row">
+                         <div class="col-md-12">
+                            <div class="profile-card">
+                               <div class="image-container">
+                                  <div type="button" class="btn image-text ">
+                                     <span>S</span>
+                                  </div>
+                               </div>
+                               <div class="text-container">
+                                  <h6 class="headding-text">John Deo</h6>
+                                  <p class="email-text">johndeo@xyz.com</p>
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                      <div class="row">
+                         <div class="col-md-12">
+                            <div class="profile-card">
+                               <div class="image-container">
+                                  <div type="button" class="btn image-text ">
+                                     <span>L</span>
+                                  </div>
+                               </div>
+                               <div class="text-container">
+                                  <h6 class="headding-text">John Deo</h6>
+                                  <p class="email-text">johndeo@xyz.com</p>
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+              </div>
+               <div class="col-md-9 col-xs-9">
+                  <div class="custom-datatable-class-list table-responsive ">
+                     <table id="dt-all-checkbox" data-searching="false" class="table w-100" cellspacing="0" width="100%">
+                        <thead>
+                           <tr>
+                              <th>
+                              </th>
+                              <th class="th-sm">NAME
+                              </th>
+                              <th class="th-sm">EMAIL
+                              </th>
+                              <th class="th-sm">Subject
+                              </th>
+                              <th class="th-sm">Received Date
+                              </th>
+                              <th class="th-sm">Action
+                              </th>
+                           </tr>
+                        </thead>
+                        <tbody class="tbody">
+                           <% @mails.each do |mail|%>
+                           <tr>
+                              <td></td>
+                              <td><%= mail.sender_name%></td>
+                              <td><%= mail.sender_email%></td>
+                              <td>
+                                 <!-- Progress bar 1 -->
+                                 <!-- <div class="progress mx-auto" data-value='15'>
+                                    <span class="progress-left">
+                                    <span class="progress-bar border-primary"></span>
+                                    </span>
+                                    <span class="progress-right">
+                                    <span class="progress-bar border-primary"></span>
+                                    </span>
+                                    <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
+                                       <div class="">15<sup class="small">%</sup></div>
+                                    </div>
+                                 </div> -->
+                                 <!-- END --> 
+                                 <%= mail.subject %>
+                              </td>
+                              <td><%= mail.email_date %></td>
+                              <td>
+                                <%= link_to get_info_path(id: mail.id) do %>
+                                  <span class="action-button"><i class="fa fa-share-alt" aria-hidden="true"></i></span>
+                                <% end %>
+ <!--                                <span class="action-button"><i class="fa fa-share-alt" aria-hidden="true"></i></span>
+                                <span class="action-button"><i class="fa fa-edit"></i></span>
+                                <span class="action-button"><i class="fa fa-trash"></i></span> -->
+                              </td>
+                           </tr>
+                           <% end %>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+<div class="featured-pagination">
+  <%= will_paginate @mails, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+</div>
+   
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#dt-all-checkbox').dataTable({
+    });
+  });                            
+</script>

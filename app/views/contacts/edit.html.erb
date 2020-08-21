@@ -1,0 +1,102 @@
+ <div class="col-md-12">
+                  <div class="custom-email-dashboard-div">
+                     <div class="row">
+                        <div class="col-md-12">
+                           <div class="custom-header-border-section">
+                              <h6>EMAIL DETAILS</h6>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="container">
+                        <div class="row">
+                           <div class="col-md-6">
+                              <div class="custom-email-dashboard-rhtform">
+                                 <%= form_for @contact do |f| %>
+                                    <div class="form-group">
+                                       <label for="text" class="custom-email-lable">NAME</label>
+                                       <%= f.text_field :name, class: 'form-control' %>
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="" class="custom-email-lable">Designation</label>
+                                       <%= f.text_field :designation, class: 'form-control' %>
+                                       <!-- <input type="email" class="form-control" id="" placeholder="Manager"> -->
+                                    </div>
+                                    <%# debugger %>
+                                    <div class="form-group">
+                                       <label for="" class="custom-email-lable">BCC</label>
+                                       <%= f.text_field :blink_carbon_copy, class: 'form-control' %>
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="" class="custom-email-lable">FB URL</label>
+                                       <%= f.text_field :facebook_url, class: 'form-control' %>
+                                       <!-- <input type="text" class="form-control" id="" placeholder="name@example.com"> -->
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="" class="custom-email-lable">Twitter Url</label>
+                                       <%= f.text_field :twitter_url, class: 'form-control' %>
+                                       <!-- <input type="text" class="form-control" id="" placeholder="name@example.com"> -->
+                                    </div>
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="custom-email-dashbord-lftform">
+                                    <div class="form-group">
+                                       <label for="text" class="custom-email-lable">Email</label>
+                                       <%= f.text_field :sender_email, class: 'form-control' %>
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="" class="custom-email-lable">CC</label>
+                                       <%= f.text_field :carbon_copy, class: 'form-control' %>
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="" class="custom-email-lable">To</label>
+                                       <%= f.text_field :receiver_email, class: 'form-control' %>
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="" class="custom-email-lable">LINKDIN URL</label>
+                                       <%= f.text_field :linkedin_url, class: 'form-control' %>
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="" class="custom-email-lable">WEBSITE</label>
+                                       <%= f.text_field :website, class: 'form-control' %>
+                                    </div>
+                                 
+                              </div>
+                           </div>
+                           <!-- <div class="col-md-12">
+                              <div class="dashboard-email-form-button">
+                               <button type="submit" class="btn btn-primary "> Save</button>
+                              </div>
+                              
+                              </div> -->
+                        </div>
+                     </div>
+                   
+
+
+                     <div class="row">
+                        <div class="col-md-6">
+                           <div class="dashboard-contact-email-form-button">
+                              <!-- <button type="submit" class="btn "> Save</button> -->
+                              <%= button_tag(type: 'submit', class: "btn btn-primary", data: { turbolinks: false }) do %>
+                       Save
+                      <% end %>
+                           </div>
+                        </div>
+                         <div class="col-md-6">
+                           <div class="dashboard-contact-email-form-button-rigth">
+                              <button type="submit" class="btn"> SHARE</button>
+                           </div>
+                        </div>
+                     </div>
+                     <% end %>
+                  </div>
+                  <div class="custom-footer-border-section">
+                  </div>
+               </div>
+
+
+<script type="text/javascript">
+        var newurl = window.location.href.split("?")[0];
+window.history.pushState({path:newurl},'',newurl);
+               </script>

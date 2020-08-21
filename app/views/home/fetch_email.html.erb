@@ -1,0 +1,213 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="custom-contact-listing-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="custom-contact-lisiting-headding" >
+              <h5>EMAIL CONFIGURATION</h5>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="custom-email-export-button">
+              <button  type="button" class="btn custom-export-button">EXPORT</button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="custom-side-panal-section">
+              <div class="sidebar-search-button d-flex justify-content-between">
+                <div class="form-group has-search">
+                  <span class="fa fa-search form-control-feedback"></span>
+                  <%= search_form_for @q , url: fetch_email_path do |f| %>
+                    <%= f.search_field :username_cont, class: "form-control custom-search-input", placeholder: "Search" %>
+                  <% end %>
+                </div>
+                <button type="button" class="btn btn-default btn-circle" data-toggle="modal" data-target="#email-configure"><i class="fa fa-plus"></i></button>
+              </div>
+              <div class="custom-email-list-section">
+                <% @mailboxes.each do |mail| %>
+                  <%= link_to fetch_email_path(email: mail.email, password: mail.password, client: mail.client), class: 'show_loader' do %>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="profile-card">
+                          <div class="image-container">
+                            <div type="button" class="btn image-text ">
+                              <span><%= mail.username[0].upcase%></span>
+                            </div>
+                          </div>
+                          <div class="text-container">
+                            <h6 class="headding-text"><%= mail.username%></h6>
+                            <p class="email-text"><%= mail.email %></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-9 col-xs-9">
+            <div class="custom-datatable-class-list table-responsive ">
+              <table id="dt-all-checkbox" data-searching="false" class="table w-100" cellspacing="0" width="100%">
+                <thead>
+                  <tr>
+                      <th>
+                      </th>
+                      <th class="th-sm">NAME
+                      </th>
+                      <th class="th-sm">EMAIL
+                      </th>
+                      <th class="th-sm">Subject
+                      </th>
+                      <th class="th-sm">Received Date
+                      </th>
+                      <th class="th-sm">Action
+                      </th>
+                  </tr>
+                </thead>
+                <tbody class="tbody">
+                  <% unless params[:mailbox] || params[:q]%>
+                    <% @imap.search(["ALL"]).slice(@start_from, @end_to).each do |message_id|%>
+                      <% emails = @imap.fetch(message_id,'RFC822')[0].attr['RFC822'] %>     
+                      <% mail = Mail.read_from_string emails %>
+                      <tr>
+                        <td></td>
+                        <td><%= mail[:from].display_names.first if mail[:from].display_names.present? %></td>
+                        <td><%= mail.from[0] %></td>
+                        <td>
+                          <%= mail.subject %>
+                        </td>
+                        <td><%= mail.date %></td>
+                        <% body = HtmlToPlainText.plain_text(mail.html_part.body.to_s).gsub("\n", "<br />").html_safe if mail.html_part.present? %>
+                        <td>
+                          <% get_mail = find_mail_from_contact(mail.message_id) %>
+                          <% if get_mail.present? %>
+                            <p style="color: green">Information Extracted</p>
+                          <% else %>
+                            <%= link_to new_contact_path(body: body, message_id: mail.message_id, sender_name: mail[:from].display_names.first,  sender_email: mail.from[0], cc: mail.cc, bcc: mail.bcc, receiver_email: mail.to[0], mail_id: mail.message_id), data: { turbolinks: false }  do %>
+                              <span class="action-button"><i class="fa fa-share-alt" aria-hidden="true"></i></span>
+                            <% end %>
+                          <% end %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+            <div class="featured-pagination">
+              <% unless params[:mailbox].present? || params[:q] %>
+                <div id ="nav">
+                  <% if params[:start].present? || @start_from > 0 %>
+                    <button><%= link_to 'Previous 10 mails', fetch_email_path(start: @start_from - 11, end: @end_to - 10, client: params[:client], email: params[:email], password: params[:password]), class: 'show_loader' %></button>
+                  <% end %>
+                  <% if  @imap.search(["ALL"]).slice(@start_from, @end_to).count >= 9 %>
+                    <button><%= link_to "Next 10 mails", fetch_email_path(start: @end_to + 1, end: @end_to + 11, client: params[:client], email: params[:email], password: params[:password]), class: 'show_loader' %></button>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+<div class="modal fade" id="email-configure" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="custom-email-popup-screen-section">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12 ">     
+                <div class="custom-email-popup-headding">
+                  <h3>CONFIGURATION</h3>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 ">
+                <div class="custom-email-popup-button">
+                  <a href='/auth/google' class="btn btn-primary sign-in-google"> <span class="custom-google-font-icon"><i class="fab fa-google"></i></span class="custom-popup-button-text"><span>SIGN IN WITH GOOGLE</span></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="custom-email-popup-form">
+                  <%= form_tag fetch_email_path, method: :get do %>
+                    <div class="form-group">
+                      <label for="" class="custom-form-lable">Email</label>
+                      <%= text_field_tag :email, nil, class: "form-control custom-inputs-control", id: "exampleInputEmail1", placeholder: "eg: Jason builder" %>
+                    </div>
+                    <div class="form-group">
+                      <label for="" class="custom-form-lable">Password</label>
+                      <%= password_field_tag :password, nil,class: "form-control custom-inputs-control", id: "exampleInputPassword1", placeholder: "********" %>
+                    </div>
+                    <div class="form-group">
+                      <label for="" class="custom-form-lable">Client</label>
+                      <%#= select_tag(:client, options_for_select([["Gmail",'imap.gmail.com'],["Outlook",'outlook.office365.com'],["Yahoo",'imap.mail.yahoo.com']], params[:client] ), class: "form-control custom-inputs-control") %>
+                      <%= select_tag 'client', options_for_select([["Gmail",'imap.gmail.com'],["Yahoo",'imap.mail.yahoo.com']]), { prompt: 'Select Client', class: "form-control custom-inputs-control", required: true , id: "client"} %>
+                      <%#= select_tag(:client, options_for_select([["Gmail",'imap.gmail.com'],["Outlook",'outlook.office365.com'],["Yahoo",'imap.mail.yahoo.com']], params[:client] ), class: "form-control custom-inputs-control") %>
+                      <%= link_to "javascript:void()", data: {toggle: "popover", content: "<h3>Attention!</h3><br><b>Before adding this please go to <a target='_blank' href='https://myaccount.google.com/lesssecureapps'>this</a> url and enable \"Allow less secure apps\". So that we can access your emails. <br>Also go to settings and click on 'Forwarding and POP/IMAP' & Enable IMAP access.</br>", html: true, placement: "right", title: 'Gmail configuration <a href="#" class="close" data-dismiss="alert">&times;</a>'}, id: 'gmail', style: 'float: right' do %>
+                      <% end %>
+
+                      <%= link_to "javascript:void()", data: {toggle: "popover", content: "<h3>Attention!</h3><br> <b>Before adding this, please perform the below steps: ' +'<br>1) Open your yahoo mail account.'+'<br>2) Go to 'ccount Info' by clicking your profile image icon on top right corner.'+'<br>3) Click 'Account Security' on the left sidebar.'+'<br>4) Click on 'Manage app password' link. It\'ll open a popup.'+'<br>5) Click on 'Select your app' dropdown and select other app. Name the app whatever you want.'+'<br>6) Click on Geberate button. It\'ll display a random password string.'+'<br>7) Copy that password and use this password in the below password field instead of your generic password field.</b>", html: true, placement: "right", title: 'Yahoo configuration <a href="#" class="close" data-dismiss="alert">&times;</a>'}, id: 'yahoo', style: 'float: right' do %>
+                      <% end %>
+
+                    </div>
+                    <div class="form-group">
+                      <label for="" class="custom-form-lable">Port</label>
+                      <%= text_field_tag :port, nil, class: "form-control custom-inputs-control", id: "exampleInputEmail1", value: 993, placeholder: "993", disabled: true %>
+                    </div>
+                    <div class="custom-form-button-email-popup">
+                      <%= button_tag(type: 'submit', class: "btn", class: 'show_loader') do %>
+                        <span style="margin:14px auto ">Login</span>
+                      <% end %>
+                    </div>
+                  <% end %>  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#dt-all-checkbox').dataTable({
+    });
+    $('.loader1').hide()
+  });
+
+  $(".show_loader").click(function(){
+    $('.loader1').show()
+  })
+
+  $(document).ready(function(){
+    $('[data-toggle="popover"]').popover();   
+  });
+
+  $("#client").change(function(event){
+    if (this.selectedOptions[0].text == "Yahoo") {
+      $('#yahoo').popover('show');
+    }
+    else {
+      $('#gmail').popover('show');      
+    }
+  })
+
+  $(document).on("click", ".popover .close" , function(){
+    $(this).parents(".popover").popover('hide');
+  }); 
+</script>

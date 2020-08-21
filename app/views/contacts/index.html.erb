@@ -1,0 +1,83 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="custom-contact-listing-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="custom-contact-lisiting-headding" >
+              <h5>CONTACT LISTING</h5>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="datatable-search-bar">
+                  <%= search_form_for @q do |f| %>
+              <div class="wrap">
+                <div class="search">
+                  <!-- <input type="text" class="searchTerm" placeholder="Search">
+                  <button type="submit" class="searchButton">
+                    <i class="fa fa-search"></i>
+                  </button>
+                  <br> -->
+
+                    <%= f.search_field :name_or_sender_email_cont, class: 'searchTerm', placeholder: 'Search' %>
+                    <%= button_tag type: 'submit', class: "searchButton" do %>
+                      <i class="fa fa-search"></i> 
+                    <% end %>
+                </div>
+              </div>
+                  <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-xs-12">
+            <div class="custom-datatable-class  table-responsive">
+              <table id="dt-all-checkbox" data-searching="false" class="table" cellspacing="0" width="100%">
+                <thead>
+                  <tr>
+                    <th>
+                    </th>
+                    <th class="th-sm">NAME
+                    </th>
+                    <th class="th-sm">EMAIL
+                    </th>
+                    <th class="th-sm">DESIGNATION
+                    </th>
+                    <th class="th-sm">CC
+                    </th>
+                    <th class="th-sm">BCC
+                    </th>
+                    <th class="th-sm">AC
+                    </th>
+                  </tr>
+                </thead>
+                  <tbody>
+                    <% @contacts.each do |contact| %>
+                      <tr>
+                        <td></td>
+                        <td><%= contact.name %></td>
+                        <td><%= contact.sender_email%>/td>
+                        <td><%= contact.designation %></td>
+                        <td><%= contact.carbon_copy %></td>
+                        <td><%= contact.blink_carbon_copy %></td>
+                        
+                        <td>
+                          <span class="action-button"><i class="fa fa-share-alt" aria-hidden="true"></i></span>
+                          <%= link_to edit_contact_path(contact.id), data: { turbolinks: false } do %>
+                            <span class="action-button"><i class="fa fa-edit"></i></span>
+                          <% end %>
+                          <%= link_to contact_path(contact.id), method: :delete do %>
+                            <span class="action-button"><i class="fa fa-trash"></i></span>
+                          <% end %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

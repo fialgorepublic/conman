@@ -1,0 +1,38 @@
+<div class="custom-registration-card">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="custom-registration-logo">
+        <%= image_tag 'Logo.png', width: '100%', height: 'auto' %>
+      </div>
+      <div class="custom-registration-logo-heading">
+        <h6>LOGIN</h6>
+      </div>
+      <div class="custom-divider"></div>
+      <div class="custom-lft-form">
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+          <div class="form-group">
+            <label for="" class="custom-form-lable">Email</label>
+            <%= f.email_field :email, class: "form-control custom-inputs-control", id: "exampleInputEmail1", "aria-describedby": "emailHelp", placeholder: "Enter email" %>
+          </div>
+
+          <div class="form-group">
+            <label for="" class="custom-form-lable custom-form-lable-margin">Password</label>
+            <%= f.password_field :password, class: "form-control custom-inputs-control", id: "exampleInputPassword1", placeholder: "Password" %>
+          </div>
+
+          <div class="custom-form-button">
+            <%= button_tag(type: 'submit', class: "btn btn-demo") do %>
+              <span style="margin:14px auto ">Login</span>
+            <% end %>
+          </div>
+            <p>Don't have account &nbsp; <span><%= link_to "Signup", new_user_registration_path %></span></p>
+        <% end %>
+      </div>
+     </div>
+    <div class="col-md-6">
+      <div class="custom-registration-right-img">
+        <%= image_tag 'login-image.png', width: '100%', height: '100%' %>
+      </div>
+    </div>
+  </div>
+</div>
