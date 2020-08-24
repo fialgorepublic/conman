@@ -102,10 +102,10 @@
               <% unless params[:mailbox].present? || params[:q] %>
                 <div id ="nav">
                   <% if params[:start].present? || @start_from > 0 %>
-                    <button><%= link_to 'Previous 10 mails', fetch_email_path(start: @start_from - 11, end: @end_to - 10, client: params[:client], email: params[:email], password: params[:password]), class: 'show_loader' %></button>
+                    <button><%= link_to 'Previous 10 mails', params[:provider].present? || params[:omniauth].present? ? fetch_email_path(start: @start_from - 11, end: @end_to - 10, client: params[:client], email: params[:email], password: params[:password], omniauth: true) : fetch_email_path(start: @start_from - 11, end: @end_to - 10, client: params[:client], email: params[:email], password: params[:password]), class: 'show_loader' %></button>
                   <% end %>
                   <% if  @imap.search(["ALL"]).slice(@start_from, @end_to).count >= 9 %>
-                    <button><%= link_to "Next 10 mails", fetch_email_path(start: @end_to + 1, end: @end_to + 11, client: params[:client], email: params[:email], password: params[:password]), class: 'show_loader' %></button>
+                    <button><%= link_to "Next 10 mails", params[:provider].present? || params[:omniauth].present? ? fetch_email_path(start: @end_to + 1, end: @end_to + 11, client: params[:client], email: params[:email], password: params[:password], omniauth: true) : fetch_email_path(start: @end_to + 1, end: @end_to + 11, client: params[:client], email: params[:email], password: params[:password]), class: 'show_loader' %></button>
                   <% end %>
                 </div>
               <% end %>

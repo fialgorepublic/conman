@@ -8,15 +8,15 @@ class HomeController < ApplicationController
     unless params[:mailbox] || params[:q]
       
       omniauth = request.env['omniauth.auth']
-      if omniauth.present?
-        params[:email] = omniauth.info.email
-        params[:password] = omniauth.credentials.token
+      if params[:omniauth] || omniauth.present?
+        params[:email] = omniauth.present? ? omniauth.info.email : params[:email]
+        params[:password] = omniauth.present? ? omniauth.credentials.token : params[:password]
         params[:client] = 'imap.gmail.com'
       end
 
       begin
         @imap = Net::IMAP.new(params[:client], 993, usessl = true, certs = nil, verify = false)
-        omniauth.present? ? @imap.authenticate('XOAUTH2', params[:email], params[:password]) : @imap.login(params[:email], params[:password])
+        params[:omniauth] || omniauth.present? ? @imap.authenticate('XOAUTH2', params[:email], params[:password]) : @imap.login(params[:email], params[:password])
         @imap.select('Inbox') 
         @start_from = params[:start].present? ? params[:start].to_i : 0
         @end_to =  params[:end].present? ? params[:end].to_i : 10
