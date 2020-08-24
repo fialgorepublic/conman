@@ -20,7 +20,7 @@ class HomeController < ApplicationController
         @imap.select('Inbox') 
         @start_from = params[:start].present? ? params[:start].to_i : 0
         @end_to =  params[:end].present? ? params[:end].to_i : 10
-        @mailbox = current_user.mailboxes.create(email: params[:email], password: params[:password], client: params[:client], username: params[:email].split("@")[0])
+        @mailbox = current_user.mailboxes.create(email: params[:email], password: params[:password], client: params[:client], username: params[:email].split("@")[0], login_through_gmail: omniauth.present? ? true : false)
       rescue => error
         redirect_to root_path, flash: {error: error}
       end

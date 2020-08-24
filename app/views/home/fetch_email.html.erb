@@ -28,7 +28,7 @@
               </div>
               <div class="custom-email-list-section">
                 <% @mailboxes.each do |mail| %>
-                  <%= link_to fetch_email_path(email: mail.email, password: mail.password, client: mail.client), class: 'show_loader' do %>
+                  <%= link_to mail.login_through_gmail? ? '/auth/google' : fetch_email_path(email: mail.email, password: mail.password, client: mail.client), class: 'show_loader' do %>
                     <div class="row">
                       <div class="col-md-12">
                         <div class="profile-card">
@@ -168,7 +168,7 @@
                       <%= text_field_tag :port, nil, class: "form-control custom-inputs-control", id: "exampleInputEmail1", value: 993, placeholder: "993", disabled: true %>
                     </div>
                     <div class="custom-form-button-email-popup">
-                      <%= button_tag(type: 'submit', class: "btn", class: 'show_loader') do %>
+                      <%= button_tag(type: 'submit', class: "btn", id: 'login') do %>
                         <span style="margin:14px auto ">Login</span>
                       <% end %>
                     </div>
@@ -190,8 +190,10 @@
     $('.loader1').hide()
   });
 
-  $(".show_loader").click(function(){
+  $('#login').click(function(){
+    if ($( "#client option:selected" ).text() != "Select Client") {
     $('.loader1').show()
+    }
   })
 
   $(document).ready(function(){

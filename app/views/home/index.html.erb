@@ -90,7 +90,7 @@
                       <label for="" class="custom-form-lable">Client</label>
                       <%= select_tag 'client', options_for_select([["Gmail",'imap.gmail.com'],["Yahoo",'imap.mail.yahoo.com']]), { prompt: 'Select Client', class: "form-control custom-inputs-control", required: true , id: "client"} %>
                       <%#= select_tag(:client, options_for_select([["Gmail",'imap.gmail.com'],["Outlook",'outlook.office365.com'],["Yahoo",'imap.mail.yahoo.com']], params[:client] ), class: "form-control custom-inputs-control") %>
-                      <%= link_to "javascript:void()", data: {toggle: "popover", content: "<h3>Attention!</h3><br><b>Before adding this please go to <a target='_blank' href='https://myaccount.google.com/lesssecureapps'>this</a> url and enable \"Allow less secure apps\". So that we can access your emails. <br>Also go to settings and click on 'Forwarding and POP/IMAP' & Enable IMAP access.</br>", html: true, placement: "right", title: 'Gmail configuration <a href="#" class="close" data-dismiss="alert">&times;</a>'}, id: 'gmail', style: 'float: right' do %>
+                      <%= link_to "javascript:void()", data: {toggle: "popover", content: "<h3>Attention!</h3><br><b>Before adding this please go to <a target='_blank' href='https://myaccount.google.com/lesssecureapps'>this</a> url and enable \"Allow less secure apps\". So that we can access your emails. <br>Also go to settings and click on 'Forwarding and POP/IMAP' & Enable IMAP access.</br>if u get this error after login: <span style='color: red'>Please log in via your web browser</span> then go to <a target='_blank' href='https://accounts.google.com/b/0/DisplayUnlockCaptcha'>this</a> url and click on continue and then login again", html: true, placement: "right", title: 'Gmail configuration <a href="#" class="close" data-dismiss="alert">&times;</a>'}, id: 'gmail', style: 'float: right' do %>
                       <% end %>
 
                       <%= link_to "javascript:void()", data: {toggle: "popover", content: "<h3>Attention!</h3><br> <b>Before adding this, please perform the below steps: ' +'<br>1) Open your yahoo mail account.'+'<br>2) Go to 'ccount Info' by clicking your profile image icon on top right corner.'+'<br>3) Click 'Account Security' on the left sidebar.'+'<br>4) Click on 'Manage app password' link. It\'ll open a popup.'+'<br>5) Click on 'Select your app' dropdown and select other app. Name the app whatever you want.'+'<br>6) Click on Geberate button. It\'ll display a random password string.'+'<br>7) Copy that password and use this password in the below password field instead of your generic password field.</b>", html: true, placement: "right", title: 'Yahoo configuration <a href="#" class="close" data-dismiss="alert">&times;</a>'}, id: 'yahoo', style: 'float: right' do %>
@@ -117,8 +117,10 @@
 </div>
 
 <script type="text/javascript">
-  $('#login').click(function(){  
+  $('#login').click(function(){
+    if ($( "#client option:selected" ).text() != "Select Client") {
     $('.loader1').show()
+    }
   })
   $(document).ready(function(){
     $('[data-toggle="popover"]').popover();   
