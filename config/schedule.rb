@@ -18,7 +18,6 @@
 # end
 
 every 20.minutes do
-  set :environment, 'productionf'
   rake "emails:check_new_email", :output => {:error => 'get_email_error.log', :standard => 'get_email.log'}
 end
 
