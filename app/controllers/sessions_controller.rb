@@ -1,7 +1,6 @@
 class SessionsController < ApplicationController
   include ApplicationHelper
   def create
-    debugger
     get_params = request.env["omniauth.params"]
     invite = get_params["invite"]
     @omniauth = request.env['omniauth.auth']

@@ -3,8 +3,12 @@ Rails.application.routes.draw do
   get 'home/index'
   devise_for :users
   get 'auth/:provider/callback', to: 'home#fetch_email'
-  root to: 'home#index'
-  resources :contacts
+  root to: 'contacts#index'
+  resources :contacts do
+  	collection do 
+  		post :extract_multiple_mails
+  	end
+  end
 
   get 'auth/:provider/callback', to: 'sessions#create'
   get '/fetch_email', to: 'home#fetch_email'

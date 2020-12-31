@@ -34,6 +34,7 @@ gem 'html_to_plain_text'
 gem 'httparty'
 gem "font-awesome-rails"
 gem 'ransack'
+gem 'whenever', require: false
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'

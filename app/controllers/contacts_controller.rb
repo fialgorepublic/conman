@@ -3,7 +3,7 @@ class ContactsController < ApplicationController
 
   def index
     # @contacts = Contact.all
-    @q = Contact.ransack(params[:q])
+    @q = current_user.contacts.ransack(params[:q])
     @contacts = @q.result.page(params[:page])
   end
 
@@ -29,6 +29,18 @@ class ContactsController < ApplicationController
   def update
     @contact.update_attributes(contact_params)
     redirect_to contacts_path,  flash: {success: "Contact Updated Successfully"}
+  end
+
+  def extract_multiple_mails
+    debugger
+    @result = HTTParty.post("http://ec2-108-128-52-36.eu-west-1.compute.amazonaws.com/conman/extract_information", {
+            body: "text=#{params["body"]}",
+            headers: {
+              'Content-Type' => 'application/x-www-form-urlencoded',
+              'charset' => 'utf-8'
+            }
+          })
+    debugger
   end
 
   private
