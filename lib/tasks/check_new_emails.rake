@@ -3,7 +3,7 @@ namespace :emails do
   	@imap = Net::IMAP.new('imap.gmail.com', 993, usessl = true, certs = nil, verify = false)
   	@imap.login('administrator@conmanapp.net', 'rjeipagbbqlipjsy')
   	@imap.select('Inbox')
-  	emails = @imap.search(["ALL"])
+  	emails = @imap.search(["UNSEEN"])
   	if emails.any?
   		emails.each do |message_id|
   			email = @imap.fetch(message_id,'RFC822')[0].attr['RFC822']
