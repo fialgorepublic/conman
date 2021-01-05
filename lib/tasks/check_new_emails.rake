@@ -24,24 +24,25 @@ namespace :emails do
                   'charset' => 'utf-8'
                 }
               })
-  				# if @result["data"].present?
-  				 	get_contact = Contact.find_by(email_id: message_id)
-  				 unless get_contact.present?
+  				if @result["data"].any?
+            @result["data"].each do |result|
+  				 	get_contact = Contact.find_by(sender_email: result["emails"][0])
+  				  unless get_contact.present?
 	  				 contact = user.contacts.new
-	  				 contact.name = sender_name
-	  				 contact.designation = @result["data"][0]["job_titles"] if @result["data"].present?
+	  				 contact.name = result["names"][0]
+	  				 contact.designation = result["job_titles"].present? ? result["job_titles"] : nil
 	  				 contact.blink_carbon_copy = bcc
-	  				 contact.facebook_url = @result["data"][0]["social_link"]["facebook"][0] if @result["data"].present?
-	  				 contact.twitter_url = @result["data"][0]["social_link"]["twitter"][0] if @result["data"].present?
-	  				 contact.sender_email = sender_email
+	  				 contact.facebook_url = result["social_link"]["facebook"][0]
+	  				 contact.twitter_url = result["social_link"]["twitter"][0] 
+	  				 contact.sender_email = result["emails"].first
 	  				 contact.carbon_copy = cc
 	  				 contact.email_id = message_id
-	  				 contact.receiver_email = receiver_email
-	  				 contact.linkedin_url = @result["data"][0]["social_link"]["linkedin"][0] if @result["data"].present?
-	  				 contact.website = @result["data"][0]["websites"][0] if @result["data"].present?
+	  				 contact.linkedin_url = result["social_link"]["linkedin"][0]
+	  				 contact.website = result["websites"][0]
 	  				 contact.save
+              end
+            end
   				 	end
-  				# end
   			end
   		end
   	end
