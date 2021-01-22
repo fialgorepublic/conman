@@ -1025,6 +1025,10 @@ section{
   animation: squad3 3s steps(1) infinite .4s;
 }
 
+.style-mail {
+	border: 1px solid black;
+	padding: 125px;
+}
 .model-preloader {
   display: flex;
   flex-flow: row wrap;

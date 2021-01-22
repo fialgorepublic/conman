@@ -10,7 +10,7 @@ class CreateContacts < ActiveRecord::Migration[5.2]
       t.string :facebook_url
       t.string :twitter_url
       t.string :linkedin_url
-      t.string :email_id
+      t.string :message_id
       t.string :website
 
       t.timestamps

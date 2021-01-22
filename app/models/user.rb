@@ -7,10 +7,11 @@ class User < ApplicationRecord
  	validates :username, presence: true, uniqueness: true
 
   has_many :mailboxes, dependent: :destroy
-  has_many :contacts, dependent: :destroy
+  has_many :contacts, dependent: :destroy, inverse_of: :user
+  has_many :emails, dependent: :destroy
   after_create :assign_email
 
   def assign_email
-  	update_attributes(assigned_email: "#{self.username}@conmanapp.net")
+  	update_attributes(assigned_email: "#{SecureRandom.urlsafe_base64(8)}@accumail.co.za")
   end
 end

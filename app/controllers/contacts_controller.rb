@@ -2,9 +2,11 @@ class ContactsController < ApplicationController
   before_action :set_cotact, only: [:edit, :update]
 
   def index
-    # @contacts = Contact.all
-    @q = current_user.contacts.ransack(params[:q])
-    @contacts = @q.result.page(params[:page])
+    if params[:email_id].present?
+      @email = Email.find(params[:email_id])
+      @q = @email.contacts.ransack(params[:q])
+      @contacts = @q.result.page(params[:page])
+    end
   end
 
   def edit
