@@ -17,7 +17,7 @@
 #   runner "AnotherModel.prune_old_records"
 # end
 
-every 2.minutes do
+every 20.minutes do
 	set :environment, 'production'
   rake "emails:check_new_email", :output => {:error => 'get_email_error.log', :standard => 'get_email.log'}
 end
