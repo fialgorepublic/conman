@@ -9,6 +9,7 @@ class EmailsController < ApplicationController
 
   def destroy
   	@email.destroy
+  	redirect_to emails_path
   end
 
 

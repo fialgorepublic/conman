@@ -8,9 +8,16 @@ namespace :emails do
       emails.each do |message_id|
         email = @imap.fetch(message_id, 'RFC822')[0].attr['RFC822']
         mail = Mail.read_from_string email
-        mail_body = mail.html_part.body if mail.html_part.present?
+        if mail.html_part.present?
+        mail_body = mail.html_part.body
+        body = HtmlToPlainText.plain_text(mail.html_part.body.to_s).gsub("\n", "<br />").html_safe
+        else
+          mail_body = mail.body
+          body = HtmlToPlainText.plain_text(mail.body.to_s).gsub("\n", "<br />").html_safe
+        end
         subject = mail.subject
-        body = HtmlToPlainText.plain_text(mail.html_part.body.to_s).gsub("\n", "<br />").html_safe if mail.html_part.present?
+
+        # body = HtmlToPlainText.plain_text(mail.html_part.body.to_s).gsub("\n", "<br />").html_safe if mail.html_part.present?
         mail_id = mail.message_id
         sender_name = mail[:from].display_names.first
         sender_email = mail.from[0]
