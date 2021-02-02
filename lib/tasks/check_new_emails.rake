@@ -15,7 +15,7 @@ namespace :emails do
           mail_body = mail.body
           body = HtmlToPlainText.plain_text(mail.body.to_s).gsub("\n", "<br />").html_safe
         end
-        subject = mail.subject
+        subject = HtmlToPlainText.plain_text(mail.subject.to_s).gsub("\n", "<br />").html_safe
 
         # body = HtmlToPlainText.plain_text(mail.html_part.body.to_s).gsub("\n", "<br />").html_safe if mail.html_part.present?
         mail_id = mail.message_id
@@ -23,7 +23,7 @@ namespace :emails do
         sender_email = mail.from[0]
         cc = mail.cc
         bcc = mail.bcc
-        receiver_email = mail.to[0]
+        receiver_email = mail.to[0].downcase
         user = User.find_by(assigned_email: receiver_email)
         if user.present?
           mails = user.emails.where(message_id: mail.message_id).first
