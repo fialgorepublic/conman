@@ -12,6 +12,7 @@ class User < ApplicationRecord
   after_create :assign_email
 
   def assign_email
-  	update_attributes(assigned_email: "#{SecureRandom.urlsafe_base64(8)}@accumail.co.za")
+    user_email = "#{SecureRandom.urlsafe_base64(8)}@accumail.co.za"
+  	update_attributes(assigned_email: user_email.downcase)
   end
 end
