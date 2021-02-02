@@ -19,7 +19,7 @@ namespace :emails do
 
         # body = HtmlToPlainText.plain_text(mail.html_part.body.to_s).gsub("\n", "<br />").html_safe if mail.html_part.present?
         mail_id = mail.message_id
-        sender_name = mail[:from].display_names.first
+        sender_name = mail[:from].display_names.first if mail[:from].present?
         sender_email = mail.from[0]
         cc = mail.cc
         bcc = mail.bcc
