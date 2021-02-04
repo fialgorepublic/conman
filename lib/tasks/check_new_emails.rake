@@ -23,7 +23,8 @@ namespace :emails do
         sender_email = mail.from[0]
         cc = mail.cc
         bcc = mail.bcc
-        receiver_email = mail.to[0].downcase
+      # receiver_email = mail.to[0]
+        receiver_email = mail.header['Envelope-to'].value.downcase
         user = User.find_by(assigned_email: receiver_email)
         if user.present?
           mails = user.emails.where(message_id: mail.message_id).first
