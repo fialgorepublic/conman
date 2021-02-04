@@ -1,7 +1,7 @@
 class EmailsController < ApplicationController
   before_action :set_email, only: [:show, :destroy]
   def index
-  	@emails = current_user.emails
+  	@emails = current_user.emails.order(id: :desc)
   end
 
   def show
