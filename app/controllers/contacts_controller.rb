@@ -6,6 +6,9 @@ class ContactsController < ApplicationController
       @email = Email.find(params[:email_id])
       @q = @email.contacts.ransack(params[:q])
       @contacts = @q.result.page(params[:page])
+    else
+      @q = Contact.ransack(params[:q])
+      @contacts = @q.result.page(params[:page])
     end
   end
 

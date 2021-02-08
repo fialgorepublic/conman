@@ -48,7 +48,24 @@
             <div></div>
           </div>
         </section>
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <% if user_signed_in? %>
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading">Conman </div>
+      <div class="list-group list-group-flush">
+        <%= link_to "Emails", emails_path, class: "list-group-item list-group-item-action bg-light" %>
+        <%= link_to "Contacts", contacts_path, class: "list-group-item list-group-item-action bg-light" %>
+      </div>
+    </div>
+    <% end %>
+    <div class="container-fluid">
         <%= yield %>
+    </div>
+  </div>
+
       </div>
     </div>
   </body>

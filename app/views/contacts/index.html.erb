@@ -19,7 +19,8 @@
                     <i class="fa fa-search"></i>
                   </button>
                   <br> -->
-
+                    <%= hidden_field_tag "email_id", params[:email_id] %>
+                  
                     <%= f.search_field :name_or_sender_email_cont, class: 'searchTerm', placeholder: 'Search' %>
                     <%= button_tag type: 'submit', class: "searchButton" do %>
                       <i class="fa fa-search"></i> 
