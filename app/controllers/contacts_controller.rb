@@ -7,7 +7,7 @@ class ContactsController < ApplicationController
       @q = @email.contacts.ransack(params[:q])
       @contacts = @q.result.page(params[:page])
     else
-      @q = Contact.ransack(params[:q])
+      @q = current_user.contacts.ransack(params[:q])
       @contacts = @q.result.page(params[:page])
     end
   end
