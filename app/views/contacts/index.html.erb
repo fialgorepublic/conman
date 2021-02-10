@@ -73,6 +73,9 @@
                   </tbody>
               </table>
             </div>
+            <div class="featured-pagination">
+              <%= will_paginate @contacts, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+            </div>
           </div>
         </div>
       </div>

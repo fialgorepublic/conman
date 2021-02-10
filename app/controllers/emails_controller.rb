@@ -1,7 +1,7 @@
 class EmailsController < ApplicationController
   before_action :set_email, only: [:show, :destroy]
   def index
-  	@emails = current_user.emails.order(id: :desc)
+  	@emails = current_user.emails.order(id: :desc).paginate(page: params[:page], per_page: 20)
   end
 
   def show

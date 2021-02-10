@@ -5,10 +5,10 @@ class ContactsController < ApplicationController
     if params[:email_id].present?
       @email = Email.find(params[:email_id])
       @q = @email.contacts.ransack(params[:q])
-      @contacts = @q.result.page(params[:page])
+      @contacts = @q.result.paginate(page: params[:page], per_page: 20)
     else
       @q = current_user.contacts.ransack(params[:q])
-      @contacts = @q.result.page(params[:page])
+      @contacts = @q.result.paginate(page: params[:page], per_page: 20)
     end
   end
 
