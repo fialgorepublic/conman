@@ -1,7 +1,14 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <%= render partial: 'shared/sidebar' %>
+    </div>
+    <div class="col-md-9">
 <div class="row" style="margin: 10px;">
 	<div class="col-md-12 style-mail">
 		<h4><%= @email.subject %></h4>
 		<%= @email.body.html_safe if @email.body.present? %>
 	</div>
 
+</div>
 </div>

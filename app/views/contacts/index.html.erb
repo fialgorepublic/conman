@@ -1,3 +1,9 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <%= render partial: 'shared/sidebar' %>
+    </div>
+    <div class="col-md-9">
 <div class="row" style="margin: 0px; width: 100%">
   <div class="col-md-12">
     <h5 class="custom-heading"><%= current_user.assigned_email.present? ? "You have assigned this email #{current_user.assigned_email}" : '' %></h5>
@@ -81,4 +87,5 @@
       </div>
     </div>
   </div>
+</div>
 </div>
