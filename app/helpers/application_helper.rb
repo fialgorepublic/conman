@@ -4,6 +4,6 @@ module ApplicationHelper
   end
 
   def email_body(email)
-  	HtmlToPlainText.plain_text(email.body.to_s).gsub("\n", "<br />").html_safe
+  	HtmlToPlainText.plain_text(email.body.to_s).gsub("\n", "").html_safe
   end
 end

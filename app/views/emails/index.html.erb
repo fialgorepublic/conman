@@ -37,7 +37,7 @@
                       <tr>
                         <td></td>
                         <td><%= email.subject %></td>
-                        <td><%= email_body(email).gsub(/\n\s+/, " ").truncate(160).html_safe%></td>
+                        <td><%= email_body(email).gsub!(/\s+/, ' ').truncate(160).html_safe%></td>
                         <td><%= link_to "Show", email_path(email)%></td>
                         <td><%= link_to 'Destroy', email, data: { confirm: 'Are you sure?' }, :method => :delete %></td>
                         <td><%= link_to "Contacts", contacts_path(email_id: email.id) if email.contacts.any? %></td>                      
